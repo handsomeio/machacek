@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import {
-  Vibration,
-Animated,
+  Animated,
+  Easing,
+  Image,
   InputField,
   StyleSheet,
-Easing,
-  Image,
   Text,
   TouchableOpacity,
+  Vibration,
   View,
 } from 'react-native';
 
+import Dice from '../components/Dice';
 import RNShakeEvent from 'react-native-shake-event';
-import Dicked from './Dicked';
 import { getRandomNumber } from '../lib/numberGenerator';
 
-class Dice extends Component {
+class Game extends Component {
   constructor(props) {
     super(props);
 
@@ -35,7 +35,6 @@ class Dice extends Component {
     RNShakeEvent.removeEventListener('shake');
   }
 
-
   rollDice = () => {
     const diceFirst = getRandomNumber();
     const diceSecond = getRandomNumber();
@@ -44,7 +43,6 @@ class Dice extends Component {
       diceFirst,
       diceSecond,
     });
-
   }
 
   diceResult = () => {
@@ -54,6 +52,7 @@ class Dice extends Component {
       ? 10 * diceFirst + diceSecond
       : 10 * diceSecond + diceFirst;
   }
+
 
   render() {
     const { diceFirst, diceSecond } = this.state;
@@ -72,11 +71,11 @@ class Dice extends Component {
           </Text>
         </TouchableOpacity>
         <Text>{this.diceResult()}</Text>
-        <Dicked duration={diceFirst} />
-        <Dicked duration={diceSecond} />
+        <Dice duration={diceFirst} />
+        <Dice duration={diceSecond} />
       </View>
     );
   }
 }
 
-export default Dice;
+export default Game;
