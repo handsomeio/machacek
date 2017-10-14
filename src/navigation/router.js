@@ -1,19 +1,30 @@
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
 import { Text } from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import I18n from 'react-native-i18n';
 
 import GameScreen from '../screens/Game';
 import InfoScreen from '../screens/Info';
+import InfoButton from '../components/InfoButton';
 
 export const AppStack = StackNavigator({
   Game: {
     screen: GameScreen,
-    navigationOptions: () => ({
-      title: 'Machacek',
-      headerRight: <Text>Info</Text>,
+    navigationOptions: ({ navigation }) => ({
+      title: I18n.t('screens.game.title'),
+      headerRight: <InfoButton navigation={navigation} />,
     }),
   },
   Info: {
     screen: InfoScreen,
+    navigationOptions: () => ({
+      title: I18n.t('screens.info.title'),
+    }),
+  },
+}, {
+  navigationOptions: {
+    headerStyle: {
+      backgroundColor: '#673AB7',
+    },
   },
 });
