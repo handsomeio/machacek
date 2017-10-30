@@ -38,7 +38,7 @@ class Dice extends Component {
         duration: duration,
         easing: Easing.linear
       }
-    ).start()
+    ).start();
   }
 
   render() {

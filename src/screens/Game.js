@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -9,6 +10,7 @@ import {
 
 import I18n from 'react-native-i18n';
 import RNShakeEvent from 'react-native-shake-event';
+import TimerMixin from 'react-timer-mixin';
 
 import Dice from '../components/Dice';
 import { getRandomNumber } from '../lib/numberGenerator';
@@ -28,8 +30,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonContainer: {
-    flex: 1
-  }
+    marginHorizontal: 15,
+    marginVertical: 30,
+  },
+  button: {
+    backgroundColor: '#673AB7',
+    paddingVertical: 10,
+    marginBottom: 10,
+  },
+  label: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  image: {
+    height: 100,
+    width: 100,
+  },
 });
 
 class Game extends Component {
@@ -39,11 +57,17 @@ class Game extends Component {
     this.state = {
       diceFirst: 2,
       diceSecond: 1,
+      shouldHideResult: false,
     };
   }
 
+
   componentWillMount() {
     RNShakeEvent.addEventListener('shake', () => {
+      if (this.state.shouldHideResult) {
+        this.resetGame();
+      }
+
       this.rollDice();
     });
   }
@@ -52,7 +76,21 @@ class Game extends Component {
     RNShakeEvent.removeEventListener('shake');
   }
 
-  hideResult = () => {}
+  mixins: [TimerMixin];
+
+  hideResult = () => {
+    this.setState({ shouldHideResult: true });
+  }
+
+  resetGame = () => this.setState({ shouldHideResult: false });
+
+  runGame = () => {
+      if (this.state.shouldHideResult) {
+        this.resetGame();
+      }
+
+      this.rollDice();
+  }
 
   rollDice = () => {
     const diceFirst = getRandomNumber();
@@ -64,6 +102,14 @@ class Game extends Component {
     });
   }
 
+  renderDice = (dice) => {
+    const { shouldHideResult } = this.state;
+
+    return shouldHideResult
+      ? <Image style={styles.image} source={require('../assets/6.png')} />
+      : <Dice duration={dice} />
+  }
+
   render() {
     const { diceFirst, diceSecond } = this.state;
 
@@ -71,18 +117,20 @@ class Game extends Component {
       <View style={styles.container}>
         <View style={styles.gameContainer}>
           <View style={styles.diceContainer}>
-            <Dice duration={diceFirst} />
+            {this.renderDice(diceFirst)}
           </View>
           <View style={styles.diceContainer}>
-            <Dice duration={diceSecond} />
+            {this.renderDice(diceSecond)}
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={this.hideResult}>
-            <Text>{I18n.t('game.hideResult')}</Text>
+          <TouchableOpacity style={styles.button} onPress={this.hideResult}>
+            <Text style={styles.label}>
+              {I18n.t('game.hideResult').toUpperCase()}
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.rollDice}>
-            <Text>
+          <TouchableOpacity style={styles.button} onPress={this.runGame}>
+            <Text style={styles.label}>
               Role Dice
             </Text>
           </TouchableOpacity>

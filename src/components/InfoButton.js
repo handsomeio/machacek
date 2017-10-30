@@ -9,16 +9,21 @@ const styles = StyleSheet.create({
   image: {
     width: 25,
     height: 25,
-    marginRight: 10,
+    marginRight: 15,
   },
 });
 
 class Info extends Component {
+  onPress = () => this.props.navigation.navigate('Info');
+
   render() {
-    console.log(this.props)
     return (
-      <TouchableOpacity onPress={() => this.props.navigation.navigate('Info')}>
-        <Image resizeMode='contain' source={require('../assets/Info.png')} style={styles.image}/>
+      <TouchableOpacity onPress={this.onPress}>
+        <Image
+          resizeMode='contain'
+          source={require('../assets/Info.png')}
+          style={styles.image}
+        />
       </TouchableOpacity>
     );
   }
