@@ -23,6 +23,7 @@ export const AppStack = StackNavigator({
   },
 }, {
   navigationOptions: {
+    headerTintColor: '#ffffff',
     headerStyle: {
       backgroundColor: '#673AB7',
     },

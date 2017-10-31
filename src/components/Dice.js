@@ -42,16 +42,18 @@ class Dice extends Component {
   }
 
   render() {
-    const {duration} = this.props;
+    const { duration, shouldHideResult } = this.props;
     const spin = this.spinValue.interpolate({
       inputRange: [0, 1],
       outputRange: ['0deg', '360deg']
     });
 
+    if (shouldHideResult) {
+      return <Image style={styles.image} source={require('../assets/6.png')}/>;
+    }
+
     return (
-      (this.props.shouldHideResult)
-        ? <Image style={styles.image} source={require('../assets/6.png')}/>
-        : <Animated.Image
+      <Animated.Image
         style={[styles.image, {transform: [{rotate: spin}]}]}
         source={getImage(duration)}
       />

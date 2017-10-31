@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {
+  Alert,
   Image,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,7 +12,6 @@ import {
 
 import I18n from 'react-native-i18n';
 import RNShakeEvent from 'react-native-shake-event';
-import TimerMixin from 'react-timer-mixin';
 
 import Dice from '../components/Dice';
 import { getRandomNumber } from '../lib/numberGenerator';
@@ -61,7 +62,6 @@ class Game extends Component {
     };
   }
 
-
   componentWillMount() {
     RNShakeEvent.addEventListener('shake', () => {
       if (this.state.shouldHideResult) {
@@ -76,20 +76,15 @@ class Game extends Component {
     RNShakeEvent.removeEventListener('shake');
   }
 
-  mixins: [TimerMixin];
-
-  hideResult = () => {
-    this.setState({ shouldHideResult: true });
-  }
-
+  hideResult = () => this.setState({ shouldHideResult: true });
   resetGame = () => this.setState({ shouldHideResult: false });
 
   runGame = () => {
-      if (this.state.shouldHideResult) {
-        this.resetGame();
-      }
+    if (this.state.shouldHideResult) {
+      this.resetGame();
+    }
 
-      this.rollDice();
+    this.rollDice();
   }
 
   rollDice = () => {
@@ -102,23 +97,42 @@ class Game extends Component {
     });
   }
 
-  renderDice = (dice) => {
-    const { shouldHideResult } = this.state;
+  diceResult = () => {
+    const { diceFirst, diceSecond } = this.state;
+    const result = (diceFirst > diceSecond)
+      ? 10 * diceFirst + diceSecond
+      : 10 * diceSecond + diceFirst;
 
-    return <Dice shouldHideResult={shouldHideResult} duration={dice} />
+    if (result === 21 || result === 31 || result === 32) {
+      return this.justDring(result);
+    }
+
+    return null;
   }
 
+  justDring = (result) => Alert.alert(
+    'Alert Title',
+    `${result}`,
+    [
+      {text: 'OK', onPress: () => console.log('OK Pressed!')},
+    ]
+  );
+
   render() {
-    const { diceFirst, diceSecond } = this.state;
+    const { diceFirst, diceSecond, shouldHideResult } = this.state;
 
     return (
       <View style={styles.container}>
+        <StatusBar
+          backgroundColor="#4527A0"
+          barStyle="light-content"
+        />
         <View style={styles.gameContainer}>
           <View style={styles.diceContainer}>
-            {this.renderDice(diceFirst)}
+            <Dice shouldHideResult={shouldHideResult} duration={diceFirst} />
           </View>
           <View style={styles.diceContainer}>
-            {this.renderDice(diceSecond)}
+            <Dice shouldHideResult={shouldHideResult} duration={diceSecond} />
           </View>
         </View>
         <View style={styles.buttonContainer}>
@@ -132,6 +146,12 @@ class Game extends Component {
               Role Dice
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={this.justDring}>
+            <Text style={styles.label}>
+              Call popup
+            </Text>
+          </TouchableOpacity>
+          {this.diceResult()}
         </View>
       </View>
     );
