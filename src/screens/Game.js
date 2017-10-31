@@ -105,9 +105,7 @@ class Game extends Component {
   renderDice = (dice) => {
     const { shouldHideResult } = this.state;
 
-    return shouldHideResult
-      ? <Image style={styles.image} source={require('../assets/6.png')} />
-      : <Dice duration={dice} />
+    return <Dice shouldHideResult={shouldHideResult} duration={dice} />
   }
 
   render() {

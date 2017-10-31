@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Animated,
   Easing,
@@ -6,8 +6,8 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import { getImage } from '../lib/getImage';
-import { getRandomNumber } from '../lib/numberGenerator';
+import {getImage} from '../lib/getImage';
+import {getRandomNumber} from '../lib/numberGenerator';
 
 const styles = StyleSheet.create({
   image: {
@@ -28,7 +28,7 @@ class Dice extends Component {
   }
 
   spin = (value) => {
-    const duration = value/2 * 500;
+    const duration = value / 2 * 500;
     this.spinValue.setValue(0);
 
     Animated.timing(
@@ -42,15 +42,17 @@ class Dice extends Component {
   }
 
   render() {
-    const { duration } = this.props;
+    const {duration} = this.props;
     const spin = this.spinValue.interpolate({
       inputRange: [0, 1],
       outputRange: ['0deg', '360deg']
     });
 
     return (
-      <Animated.Image
-        style={[styles.image, { transform: [{rotate: spin}] }]}
+      (this.props.shouldHideResult)
+        ? <Image style={styles.image} source={require('../assets/6.png')}/>
+        : <Animated.Image
+        style={[styles.image, {transform: [{rotate: spin}]}]}
         source={getImage(duration)}
       />
     );
