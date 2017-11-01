@@ -33,11 +33,12 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginHorizontal: 15,
     marginVertical: 30,
+    height: 50,
+    marginBottom: 10,
   },
   button: {
     backgroundColor: '#673AB7',
     paddingVertical: 10,
-    marginBottom: 10,
   },
   label: {
     color: '#ffffff',
@@ -94,6 +95,7 @@ class Game extends Component {
     this.setState({
       diceFirst,
       diceSecond,
+      shouldHideResult: false,
     });
   }
 
@@ -110,6 +112,7 @@ class Game extends Component {
     return null;
   }
 
+
   justDring = (result) => Alert.alert(
     'Alert Title',
     `${result}`,
@@ -117,6 +120,19 @@ class Game extends Component {
       {text: 'OK', onPress: () => console.log('OK Pressed!')},
     ]
   );
+
+  renderButton = () => {
+    if(!this.state.shouldHideResult) {
+      return (
+        <TouchableOpacity style={styles.button} onPress={this.hideResult}>
+          <Text style={styles.label}>
+            {I18n.t('game.hideResult').toUpperCase()}
+          </Text>
+        </TouchableOpacity>
+      )
+    }
+  }
+
 
   render() {
     const { diceFirst, diceSecond, shouldHideResult } = this.state;
@@ -136,6 +152,7 @@ class Game extends Component {
           </View>
         </View>
         <View style={styles.buttonContainer}>
+
           <TouchableOpacity style={styles.button} onPress={this.hideResult}>
             <Text style={styles.label}>
               {I18n.t('game.hideResult').toUpperCase()}
@@ -152,6 +169,7 @@ class Game extends Component {
             </Text>
           </TouchableOpacity>
           {this.diceResult()}
+        {this.renderButton()}
         </View>
       </View>
     );
