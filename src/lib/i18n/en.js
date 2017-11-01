@@ -33,5 +33,9 @@ export const en = {
       descriptionD: '6-1 "61"\n6-2 "62"\n6-3 "63"\n6-4 "64"\n6-5 "65"',
       descriptionE: '1-1 "100"\n2-2 "200"\n3-3 "300"\n4-4 "400"\n5-5 "500"\n6-6 "600"',
     },
+    fourthSlide: {
+      title: 'Be Aware',
+      descriptionA: 'As always, please remember to drink responsibly! This alcohol drinking game is not meant to lead to you becoming sick due to over-consumption of alcohol. If you enjoyed it, please leave feedback in the comments & let us know how we can make it better!',
+    },
   },
 };

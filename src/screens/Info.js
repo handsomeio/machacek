@@ -92,6 +92,13 @@ class Info extends Component {
           </View>
         </View>
         <View style={styles.slideWrapper}>
+          <View style={styles.imageWrapper}>
+            <Image
+              style={styles.shakeImage}
+              source={require('../assets/pass-phone.png')}
+              resizeMode='contain'
+            />
+          </View>
           <Text style={styles.title}>{I18n.t('info.secondSlide.title')}</Text>
           <View style={styles.descriptionWrapper}>
             <Text style={styles.bullet}>{'\u2022'}</Text>
@@ -111,6 +118,13 @@ class Info extends Component {
           </View>
         </View>
         <View style={styles.slideWrapper}>
+          <View style={styles.imageWrapper}>
+            <Image
+              style={styles.shakeImage}
+              source={require('../assets/dice.png')}
+              resizeMode='contain'
+            />
+          </View>
           <Text style={styles.title}>{I18n.t('info.thirdSlide.title')}</Text>
           <View>
             <View style={styles.bestCombination}>
@@ -123,6 +137,10 @@ class Info extends Component {
               <Text style={[styles.description, {flex: 1}]}>{I18n.t('info.thirdSlide.descriptionE')}</Text>
             </View>
           </View>
+        </View>
+        <View style={styles.slideWrapper}>
+          <Text style={styles.title}>{I18n.t('info.fourthSlide.title')}</Text>
+          <Text style={styles.description}>{I18n.t('info.fourthSlide.descriptionA')}</Text>
         </View>
       </Swiper>
     );
