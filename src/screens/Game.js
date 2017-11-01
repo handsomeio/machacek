@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginHorizontal: 15,
     marginVertical: 30,
-    height: 50,
     marginBottom: 10,
   },
   button: {
@@ -121,7 +120,7 @@ class Game extends Component {
     ]
   );
 
-  renderButton = () => {
+  renderHideButton = () => {
     if(!this.state.shouldHideResult) {
       return (
         <TouchableOpacity style={styles.button} onPress={this.hideResult}>
@@ -153,23 +152,13 @@ class Game extends Component {
         </View>
         <View style={styles.buttonContainer}>
 
-          <TouchableOpacity style={styles.button} onPress={this.hideResult}>
-            <Text style={styles.label}>
-              {I18n.t('game.hideResult').toUpperCase()}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={this.runGame}>
-            <Text style={styles.label}>
-              Role Dice
-            </Text>
-          </TouchableOpacity>
           <TouchableOpacity onPress={this.justDring}>
             <Text style={styles.label}>
               Call popup
             </Text>
           </TouchableOpacity>
           {this.diceResult()}
-        {this.renderButton()}
+          {this.renderHideButton()}
         </View>
       </View>
     );
