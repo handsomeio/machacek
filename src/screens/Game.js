@@ -99,7 +99,9 @@ class Game extends Component {
       ? 10 * diceFirst + diceSecond
       : 10 * diceSecond + diceFirst;
 
-    if (result === 21 || result === 31 || result === 32) {
+    if (result === 31 ) {
+      return this.justDring(result);
+    } else if (result === 32) {
       return this.justDring(result);
     }
 
@@ -146,7 +148,6 @@ class Game extends Component {
           </View>
         </View>
         <View style={styles.buttonContainer}>
-
           <TouchableOpacity onPress={this.justDring}>
             <Text style={styles.label}>
               Call popup

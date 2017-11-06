@@ -130,11 +130,13 @@ class Info extends Component {
             <View style={styles.bestCombination}>
               <Text style={styles.description}>{I18n.t('info.thirdSlide.descriptionA')}</Text>
             </View>
+            <View style={styles.bestCombination}>
+              <Text style={styles.description}>{I18n.t('info.thirdSlide.descriptionE')}</Text>
+            </View>
             <View style={styles.otherCombination}>
               <Text style={[styles.description, {flex: 1}]}>{I18n.t('info.thirdSlide.descriptionB')}</Text>
               <Text style={[styles.description, {flex: 1}]}>{I18n.t('info.thirdSlide.descriptionC')}</Text>
               <Text style={[styles.description, {flex: 1}]}>{I18n.t('info.thirdSlide.descriptionD')}</Text>
-              <Text style={[styles.description, {flex: 1}]}>{I18n.t('info.thirdSlide.descriptionE')}</Text>
             </View>
           </View>
         </View>
