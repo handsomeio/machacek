@@ -1,4 +1,4 @@
-package com.machacek;
+package com.mexicali;
 
 import android.app.Application;
 

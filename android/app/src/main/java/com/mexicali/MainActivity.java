@@ -1,4 +1,4 @@
-package com.machacek;
+package com.mexicali;
 
 import com.facebook.react.ReactActivity;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
@@ -11,6 +11,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "machacek";
+        return "Mexicali";
     }
 }
