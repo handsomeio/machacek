@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   Alert,
-  Image,
   StatusBar,
   StyleSheet,
   Text,
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    backgroundColor: '#673AB7',
+    backgroundColor: '#673ab7',
     paddingVertical: 10,
   },
   label: {
@@ -44,10 +43,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     textAlign: 'center',
-  },
-  image: {
-    height: 100,
-    width: 100,
   },
 });
 
@@ -139,7 +134,7 @@ class Game extends Component {
     return (
       <View style={styles.container}>
         <StatusBar
-          backgroundColor="#4527A0"
+          backgroundColor="#320b86"
           barStyle="light-content"
         />
         <View style={styles.gameContainer}>

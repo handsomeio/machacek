@@ -54,8 +54,8 @@ var styles = StyleSheet.create({
     marginBottom: 10,
   },
   shakeImage: {
-    width: 120,
-    height: 120,
+    width: 100,
+    height: 100,
   },
 });
 

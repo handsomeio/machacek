@@ -21,7 +21,7 @@ class Info extends Component {
       <TouchableOpacity onPress={this.onPress}>
         <Image
           resizeMode='contain'
-          source={require('../assets/Info.png')}
+          source={require('../assets/info.png')}
           style={styles.image}
         />
       </TouchableOpacity>
