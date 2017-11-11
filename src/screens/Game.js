@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Alert,
   StatusBar,
@@ -6,14 +6,16 @@ import {
   Text,
   TouchableOpacity,
   Vibration,
+  Image,
   View,
+  Dimensions
 } from 'react-native';
 
 import I18n from 'react-native-i18n';
 import RNShakeEvent from 'react-native-shake-event';
 
 import Dice from '../components/Dice';
-import { getRandomNumber } from '../lib/numberGenerator';
+import {getRandomNumber} from '../lib/numberGenerator';
 
 const styles = StyleSheet.create({
   container: {
@@ -44,7 +46,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
   },
+  image: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    resizeMode: 'contain',
+    marginTop:-80
+  },
 });
+
 
 class Game extends Component {
   constructor(props) {
@@ -71,8 +80,8 @@ class Game extends Component {
     RNShakeEvent.removeEventListener('shake');
   }
 
-  hideResult = () => this.setState({ shouldHideResult: true });
-  resetGame = () => this.setState({ shouldHideResult: false });
+  hideResult = () => this.setState({shouldHideResult: true});
+  resetGame = () => this.setState({shouldHideResult: false});
 
   runGame = () => {
     if (this.state.shouldHideResult) {
@@ -94,12 +103,12 @@ class Game extends Component {
   }
 
   diceResult = () => {
-    const { diceFirst, diceSecond } = this.state;
+    const {diceFirst, diceSecond} = this.state;
     const result = (diceFirst > diceSecond)
       ? 10 * diceFirst + diceSecond
       : 10 * diceSecond + diceFirst;
 
-    if (result === 31 ) {
+    if (result === 31) {
       return this.justDring(result);
     } else if (result === 32) {
       return this.justDring(result);
@@ -118,7 +127,7 @@ class Game extends Component {
   );
 
   renderHideButton = () => {
-    if(!this.state.shouldHideResult) {
+    if (!this.state.shouldHideResult) {
       return (
         <TouchableOpacity style={styles.button} onPress={this.hideResult}>
           <Text style={styles.label}>
@@ -129,24 +138,31 @@ class Game extends Component {
     }
   }
 
+  showDices = () => {
+    const {diceFirst, diceSecond, shouldHideResult} = this.state;
+    if (shouldHideResult) {
+      return (<Image style={styles.image} source={require('../assets/hidden.png')}/>);
+    } else {
+      return (<View style={styles.gameContainer}>
+        <View style={styles.diceContainer}>
+          <Dice number={getRandomNumber()}/>
+        </View>
+        <View style={styles.diceContainer}>
+          <Dice number={getRandomNumber()}/>
+        </View>
+      </View>)
+    }
+  }
 
   render() {
-    const { diceFirst, diceSecond, shouldHideResult } = this.state;
-
     return (
       <View style={styles.container}>
+
         <StatusBar
           backgroundColor="#320b86"
           barStyle="light-content"
         />
-        <View style={styles.gameContainer}>
-          <View style={styles.diceContainer}>
-            <Dice shouldHideResult={shouldHideResult} duration={diceFirst} />
-          </View>
-          <View style={styles.diceContainer}>
-            <Dice shouldHideResult={shouldHideResult} duration={diceSecond} />
-          </View>
-        </View>
+        {this.showDices()}
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={this.justDring}>
             <Text style={styles.label}>

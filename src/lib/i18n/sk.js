@@ -8,6 +8,6 @@ export const sk = {
     },
   },
   game: {
-    hideResult: 'Skryt vysledok',
+    hideResult: 'Veri mi',
   },
 };

@@ -28,13 +28,14 @@ class Dice extends Component {
   }
 
   spin = (value) => {
-    const duration = value / 2 * 500;
+    const thrownValue = getRandomNumber();
+    const duration = thrownValue / 2 * 500;
     this.spinValue.setValue(0);
 
     Animated.timing(
       this.spinValue,
       {
-        toValue: value,
+        toValue: thrownValue,
         duration: duration,
         easing: Easing.linear
       }
@@ -42,20 +43,16 @@ class Dice extends Component {
   }
 
   render() {
-    const { duration, shouldHideResult } = this.props;
+    const { number } = this.props;
     const spin = this.spinValue.interpolate({
       inputRange: [0, 1],
       outputRange: ['0deg', '360deg']
     });
 
-    if (shouldHideResult) {
-      return <Image style={styles.image} source={require('../assets/6.png')}/>;
-    }
-
     return (
       <Animated.Image
         style={[styles.image, {transform: [{rotate: spin}]}]}
-        source={getImage(duration)}
+        source={getImage(number)}
       />
     );
   }

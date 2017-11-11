@@ -8,7 +8,7 @@ export const en = {
     },
   },
   game: {
-    hideResult: 'Hide result',
+    hideResult: 'He belives me',
   },
   info: {
     firstSlide: {
