@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  AppState,
   Alert,
   StatusBar,
   StyleSheet,
@@ -63,33 +64,41 @@ class Game extends Component {
       diceFirst: 2,
       diceSecond: 1,
       shouldHideResult: false,
+      appState: AppState.currentState,
     };
   }
 
   componentWillMount() {
+    AppState.addEventListener('change', this.handleAppStateChange);
+    this.addShakeEvent();
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange);
+    RNShakeEvent.removeEventListener('shake');
+  }
+
+  addShakeEvent = () => {
     RNShakeEvent.addEventListener('shake', () => {
       if (this.state.shouldHideResult) {
         this.resetGame();
       }
 
       this.rollDice();
-    });
+    })
   }
 
-  componentWillUnmount() {
-    RNShakeEvent.removeEventListener('shake');
+  handleAppStateChange = (nextAppState) => {
+    console.log(nextAppState)
+    if (nextAppState === 'background' || nextAppState === 'inactive') {
+      RNShakeEvent.removeEventListener('shake');
+    } else {
+      this.addShakeEvent();
+    }
   }
 
   hideResult = () => this.setState({shouldHideResult: true});
   resetGame = () => this.setState({shouldHideResult: false});
-
-  runGame = () => {
-    if (this.state.shouldHideResult) {
-      this.resetGame();
-    }
-
-    this.rollDice();
-  }
 
   rollDice = () => {
     const diceFirst = getRandomNumber();
