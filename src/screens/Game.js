@@ -1,22 +1,20 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   AppState,
-  Alert,
+  Dimensions,
+  Image,
   StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
-  Vibration,
-  Image,
   View,
-  Dimensions
 } from 'react-native';
 
 import I18n from 'react-native-i18n';
 import RNShakeEvent from 'react-native-shake-event';
 
 import Dice from '../components/Dice';
-import {getRandomNumber} from '../lib/numberGenerator';
+import { getRandomNumber } from '../lib/numberGenerator';
 
 const styles = StyleSheet.create({
   container: {
@@ -44,17 +42,30 @@ const styles = StyleSheet.create({
   label: {
     color: '#ffffff',
     fontSize: 16,
+    fontFamily: 'Roboto',
     fontWeight: '700',
     textAlign: 'center',
   },
   image: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    resizeMode: 'contain',
-    marginTop:-80
+    marginTop:-50
+  },
+  imageTextWrap: {
+    backgroundColor: 'rgba(0,0,0,0)',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imageText: {
+    fontSize: 30,
+    fontFamily: 'Roboto',
+    fontWeight: '700',
+    color: '#ffffff',
+    backgroundColor: 'rgba(0,0,0,0)',
+    transform: [{ rotate: '-30deg'}],
   },
 });
-
 
 class Game extends Component {
   constructor(props) {
@@ -64,38 +75,30 @@ class Game extends Component {
       diceFirst: 2,
       diceSecond: 1,
       shouldHideResult: false,
-      appState: AppState.currentState,
     };
   }
 
-  componentWillMount() {
-    AppState.addEventListener('change', this.handleAppStateChange);
-    this.addShakeEvent();
-  }
-
-  componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange);
-    RNShakeEvent.removeEventListener('shake');
-  }
-
-  addShakeEvent = () => {
+  componentDidMount() {
     RNShakeEvent.addEventListener('shake', () => {
       if (this.state.shouldHideResult) {
         this.resetGame();
       }
 
       this.rollDice();
-    })
+    });
+    // AppState.addEventListener('change', this.handleAppStateChange);
   }
 
-  handleAppStateChange = (nextAppState) => {
-    console.log(nextAppState)
-    if (nextAppState === 'background' || nextAppState === 'inactive') {
-      RNShakeEvent.removeEventListener('shake');
-    } else {
-      this.addShakeEvent();
-    }
+  componentWillUnmount() {
+    // AppState.removeEventListener('change', this.handleAppStateChange);
+    RNShakeEvent.removeEventListener('shake');
   }
+
+  // handleAppStateChange = (nextAppState) => {
+  //   if (nextAppState === 'background' || nextAppState === 'inactive') {
+  //     RNShakeEvent.removeEventListener('shake');
+  //   }
+  // }
 
   hideResult = () => this.setState({shouldHideResult: true});
   resetGame = () => this.setState({shouldHideResult: false});
@@ -111,62 +114,53 @@ class Game extends Component {
     });
   }
 
-  diceResult = () => {
-    const {diceFirst, diceSecond} = this.state;
-    const result = (diceFirst > diceSecond)
-      ? 10 * diceFirst + diceSecond
-      : 10 * diceSecond + diceFirst;
-
-    if (result === 31) {
-      return this.justDring(result);
-    } else if (result === 32) {
-      return this.justDring(result);
-    }
-
-    return null;
-  }
-
-
-  justDring = (result) => Alert.alert(
-    'Alert Title',
-    `${result}`,
-    [
-      {text: 'OK', onPress: () => console.log('OK Pressed!')},
-    ]
-  );
-
   renderHideButton = () => {
-    if (!this.state.shouldHideResult) {
+    const { shouldHideResult } = this.state;
+    if (!shouldHideResult) {
       return (
         <TouchableOpacity style={styles.button} onPress={this.hideResult}>
           <Text style={styles.label}>
-            {I18n.t('game.hideResult').toUpperCase()}
+            {I18n.t('game.hideResult')}
           </Text>
         </TouchableOpacity>
-      )
+      );
     }
   }
 
   showDices = () => {
-    const {diceFirst, diceSecond, shouldHideResult} = this.state;
+    const { diceFirst, diceSecond, shouldHideResult } = this.state;
+
     if (shouldHideResult) {
-      return (<Image style={styles.image} source={require('../assets/hidden.png')}/>);
-    } else {
-      return (<View style={styles.gameContainer}>
-        <View style={styles.diceContainer}>
-          <Dice number={getRandomNumber()}/>
+      return (
+        <Image
+          style={styles.image}
+          resizeMode={'contain'}
+          source={require('../assets/hidden.png')}
+        >
+        <View style={styles.imageTextWrap}>
+          <Text style={styles.imageText}>
+            {I18n.t('game.hiddenTitle')}
+          </Text>
         </View>
-        <View style={styles.diceContainer}>
-          <Dice number={getRandomNumber()}/>
-        </View>
-      </View>)
+        </Image>
+      );
     }
+
+    return (
+      <View style={styles.gameContainer}>
+        <View style={styles.diceContainer}>
+          <Dice number={diceFirst}/>
+        </View>
+        <View style={styles.diceContainer}>
+          <Dice number={diceSecond}/>
+        </View>
+      </View>
+    );
   }
 
   render() {
     return (
       <View style={styles.container}>
-
         <StatusBar
           backgroundColor="#320b86"
           barStyle="light-content"
@@ -178,7 +172,6 @@ class Game extends Component {
               Call popup
             </Text>
           </TouchableOpacity>
-          {this.diceResult()}
           {this.renderHideButton()}
         </View>
       </View>

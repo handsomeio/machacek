@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Animated,
   Easing,
@@ -6,8 +6,8 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import {getImage} from '../lib/getImage';
-import {getRandomNumber} from '../lib/numberGenerator';
+import { getImage } from '../lib/getImage';
+import { getRandomNumber } from '../lib/numberGenerator';
 
 const styles = StyleSheet.create({
   image: {

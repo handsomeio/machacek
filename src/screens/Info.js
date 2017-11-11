@@ -19,7 +19,7 @@ var styles = StyleSheet.create({
   },
   title: {
     color: '#000000',
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: '700',
     textAlign: 'center',
     fontFamily: 'Roboto',
@@ -30,16 +30,16 @@ var styles = StyleSheet.create({
   },
   description: {
     color: '#000000',
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: 'Roboto',
     marginBottom: 5,
-    lineHeight: 24,
+    lineHeight: 22,
   },
   bullet: {
-    fontSize: 30,
+    fontSize: 20,
     marginRight: 10,
     color: '#000000',
-    lineHeight: 24,
+    lineHeight: 22,
   },
   bestCombination: {
     flexDirection: 'column',

@@ -9,6 +9,7 @@ export const en = {
   },
   game: {
     hideResult: 'He belives me',
+    hiddenTitle: 'Hidden',
   },
   info: {
     firstSlide: {
