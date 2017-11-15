@@ -5,17 +5,18 @@
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
 		"test": "jest",
-    "release-android": "cd android && ./gradlew clean && ./gradlew assembleRelease && open app/build/outputs/apk/ && cd .."
+		"release-android": "cd android && ./gradlew clean && ./gradlew assembleRelease && open app/build/outputs/apk/ && cd .."
 	},
 	"dependencies": {
 		"react": "16.0.0",
 		"react-native": "0.49.3",
+		"react-native-admob": "^2.0.0-beta.2",
 		"react-native-i18n": "^2.0.7",
 		"react-native-shake-event": "^4.0.1",
-		"react-timer-mixin": "^0.13.3",
 		"react-native-snap-carousel": "^3.3.4",
 		"react-native-swiper": "^1.5.13",
-		"react-navigation": "^1.0.0-beta.13"
+		"react-navigation": "^1.0.0-beta.13",
+		"react-timer-mixin": "^0.13.3"
 	},
 	"devDependencies": {
 		"babel-jest": "21.2.0",
@@ -26,9 +27,9 @@
 	"jest": {
 		"preset": "react-native"
 	},
-  "rnpm": {
-    "assets": [
-	    "./src/assets/fonts/"
-    ]
-  }
+	"rnpm": {
+		"assets": [
+			"./src/assets/fonts/"
+		]
+	}
 }

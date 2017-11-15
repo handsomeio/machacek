@@ -8,7 +8,13 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
+}
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded,
+} from 'react-native-admob' from 'react-native';
 
 import I18n from 'react-native-i18n';
 import RNShakeEvent from 'react-native-shake-event';
@@ -174,6 +180,12 @@ class Game extends Component {
           </TouchableOpacity>
           {this.renderHideButton()}
         </View>
+        <AdMobBanner
+          adSize="fullBanner"
+          adUnitID="your-admob-unit-id"
+          testDevices={[AdMobBanner.simulatorId]}
+          onAdFailedToLoad={error => console.error(error)}
+        />
       </View>
     );
   }
